@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 5 Humanities: Take-Home Test 2</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        roman: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            600: '#e11d48',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-radio:checked + label {
+            border-color: #38bdf8;
+            background-color: rgba(56, 189, 248, 0.15);
+        }
+        .roman-radio:checked + label {
+            border-color: #f43f5e;
+            background-color: rgba(244, 63, 94, 0.15);
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <!-- TOP STICKY HEADER -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-lg">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-sky-500/20 text-sky-400 border border-sky-500/30">Stage 5 Humanities</span>
+                    <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/30">Take-Home Test 2</span>
+                </div>
+                <h1 class="text-xl font-bold text-white mt-1">Under the Waves &amp; Across the Empire</h1>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <!-- Score Indicator -->
+                <div class="text-right">
+                    <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Total Value</div>
+                    <div class="text-lg font-extrabold text-amber-400">30 Marks</div>
+                </div>
+                <!-- Progress Indicator -->
+                <div class="w-32 sm:w-44">
+                    <div class="flex justify-between text-xs text-slate-400 mb-1">
+                        <span>Progress</span>
+                        <span id="progress-text">0/10 Answered</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700">
+                        <div id="progress-bar" class="bg-gradient-to-r from-sky-400 to-rose-500 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-5xl mx-auto px-4 pt-8">
+
+        <!-- STUDENT REGISTRATION CARD -->
+        <section class="glass-card rounded-2xl p-6 mb-8 border-l-4 border-l-amber-500">
+            <h2 class="text-lg font-bold text-slate-100 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-user-graduate text-amber-400"></i> Student Information
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1" for="student-name">Full Name *</label>
+                    <input type="text" id="student-name" placeholder="Enter your full name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:border-amber-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1" for="student-class">Class / Group</label>
+                    <input type="text" id="student-class" value="Year 5 Humanities" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:border-amber-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Date</label>
+                    <input type="text" id="test-date" readonly class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-400 text-sm cursor-not-allowed">
+                </div>
+            </div>
+        </section>
+
+        <form id="test-form" onsubmit="event.preventDefault();">
+
+            <!-- ================= SECTION A: PHYSICAL GEOGRAPHY ================= -->
+            <div class="mb-10">
+                <div class="flex items-center justify-between bg-gradient-to-r from-sky-900/80 to-slate-900 p-4 rounded-xl border border-sky-500/30 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-sky-500/20 border border-sky-400/40 flex items-center justify-center text-sky-400 text-lg">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-sky-200">SECTION A: Physical Geography – Under the Waves</h2>
+                            <p class="text-xs text-sky-300/70">Ocean floor features, ocean layers &amp; marine navigation</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40">15 Marks</span>
+                </div>
+
+                <!-- Q1: Ocean Coverage MCQ -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Question 1 • 2 Marks</span>
+                        <span class="text-xs text-slate-400">Multiple Choice</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-4">
+                        What percentage of Earth's surface is covered by oceans, and what is the average depth of the ocean floor?
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <input type="radio" id="q1-a" name="q1" value="A" class="hidden custom-radio">
+                            <label for="q1-a" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-sky-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">A</span>
+                                50% covered | Average depth 1,200 m
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q1-b" name="q1" value="B" class="hidden custom-radio">
+                            <label for="q1-b" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-sky-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">B</span>
+                                71% covered | Average depth 3,700 m
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q1-c" name="q1" value="C" class="hidden custom-radio">
+                            <label for="q1-c" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-sky-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">C</span>
+                                85% covered | Average depth 11,000 m
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q1-d" name="q1" value="D" class="hidden custom-radio">
+                            <label for="q1-d" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-sky-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">D</span>
+                                30% covered | Average depth 500 m
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q2: Ocean Layers MCQ -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Question 2 • 3 Marks</span>
+                        <span class="text-xs text-slate-400">Multiple Choice</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-4">
+                        Which ocean zone is located below 1,000 metres depth, receives <strong>no sunlight</strong>, is freezing cold, and features creatures like the anglerfish and giant squid?
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <input type="radio" id="q2-a" name="q2" value="A" class="hidden custom-radio">
+                            <label for="q2-a" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-sky-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">A</span>
+                                Sunlight Zone (0 - 200m)
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q2-b" name="q2" value="B" class="hidden custom-radio">
+                            <label for="q2-b" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-sky-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">B</span>
+                                Twilight Zone (200 - 1,000m)
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q2-c" name="q2" value="C" class="hidden custom-radio">
+                            <label for="q2-c" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-sky-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">C</span>
+                                Midnight Zone (&gt; 1,000m)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q3: Interactive Floor Feature Matching -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Question 3 • 4 Marks</span>
+                        <span class="text-xs text-slate-400">Feature Matching</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-4">
+                        Match each ocean floor feature to its correct geographical description:
+                    </p>
+
+                    <div class="space-y-4">
+                        <!-- Match Item 1 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-900/60 p-3 rounded-lg border border-slate-700/80">
+                            <div class="md:col-span-4 font-semibold text-sky-300 text-sm">
+                                <i class="fa-solid fa-water text-xs mr-1"></i> Continental Shelf
+                            </div>
+                            <div class="md:col-span-8">
+                                <select id="match-1" class="w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-sky-500">
+                                    <option value="">-- Select matching description --</option>
+                                    <option value="reef">Rocky ridge built by tiny animals; a busy marine habitat</option>
+                                    <option value="shelf">Shallow edge of land underwater, up to about 200m deep</option>
+                                    <option value="trench">Deepest part of the ocean (e.g. Mariana Trench at 11,000m)</option>
+                                    <option value="seabed">The bottom floor of the ocean made of sand, rock, and mud</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Match Item 2 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-900/60 p-3 rounded-lg border border-slate-700/80">
+                            <div class="md:col-span-4 font-semibold text-sky-300 text-sm">
+                                <i class="fa-solid fa-fish text-xs mr-1"></i> Coral Reef
+                            </div>
+                            <div class="md:col-span-8">
+                                <select id="match-2" class="w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-sky-500">
+                                    <option value="">-- Select matching description --</option>
+                                    <option value="reef">Rocky ridge built by tiny animals; a busy marine habitat</option>
+                                    <option value="shelf">Shallow edge of land underwater, up to about 200m deep</option>
+                                    <option value="trench">Deepest part of the ocean (e.g. Mariana Trench at 11,000m)</option>
+                                    <option value="seabed">The bottom floor of the ocean made of sand, rock, and mud</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Match Item 3 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-900/60 p-3 rounded-lg border border-slate-700/80">
+                            <div class="md:col-span-4 font-semibold text-sky-300 text-sm">
+                                <i class="fa-solid fa-mountain-sun text-xs mr-1"></i> Ocean Trench
+                            </div>
+                            <div class="md:col-span-8">
+                                <select id="match-3" class="w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-sky-500">
+                                    <option value="">-- Select matching description --</option>
+                                    <option value="reef">Rocky ridge built by tiny animals; a busy marine habitat</option>
+                                    <option value="shelf">Shallow edge of land underwater, up to about 200m deep</option>
+                                    <option value="trench">Deepest part of the ocean (e.g. Mariana Trench at 11,000m)</option>
+                                    <option value="seabed">The bottom floor of the ocean made of sand, rock, and mud</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Match Item 4 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-900/60 p-3 rounded-lg border border-slate-700/80">
+                            <div class="md:col-span-4 font-semibold text-sky-300 text-sm">
+                                <i class="fa-solid fa-layer-group text-xs mr-1"></i> Seabed
+                            </div>
+                            <div class="md:col-span-8">
+                                <select id="match-4" class="w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-sky-500">
+                                    <option value="">-- Select matching description --</option>
+                                    <option value="reef">Rocky ridge built by tiny animals; a busy marine habitat</option>
+                                    <option value="shelf">Shallow edge of land underwater, up to about 200m deep</option>
+                                    <option value="trench">Deepest part of the ocean (e.g. Mariana Trench at 11,000m)</option>
+                                    <option value="seabed">The bottom floor of the ocean made of sand, rock, and mud</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q4: Navigation Hazards Short Answer -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Question 4 • 6 Marks</span>
+                        <span class="text-xs text-slate-400">Short Explanation</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-2">
+                        Why did Roman sailors call winter the <em>"Mare Clausum"</em> (Closed Sea), and what specific ocean floor or sea hazards made sailing dangerous?
+                    </p>
+                    <p class="text-xs text-slate-400 mb-4">
+                        <i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i>
+                        <em>Tip: Mention winter storms, hidden reefs/rocks, or shallow water/sandbanks.</em>
+                    </p>
+                    <textarea id="q4-response" rows="4" placeholder="Write your explanation here..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 text-sm focus:outline-none focus:border-sky-500 transition"></textarea>
+                </div>
+            </div>
+
+
+            <!-- ================= SECTION B: ROMAN HISTORY & EMPIRE ================= -->
+            <div class="mb-10">
+                <div class="flex items-center justify-between bg-gradient-to-r from-rose-950/80 to-slate-900 p-4 rounded-xl border border-rose-500/30 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-rose-500/20 border border-rose-400/40 flex items-center justify-center text-rose-400 text-lg">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-rose-200">SECTION B: History &amp; Empire – Across the Empire</h2>
+                            <p class="text-xs text-rose-300/70">The Roman Army, Mediterranean geography &amp; empire expansion</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">15 Marks</span>
+                </div>
+
+                <!-- Q5: Roman Soldier Equipment MCQ -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Question 5 • 3 Marks</span>
+                        <span class="text-xs text-slate-400">Multiple Choice</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-4">
+                        What was the <strong>Scutum</strong> used by a Roman legionary, and how many soldiers made up a single Roman legion?
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <input type="radio" id="q5-a" name="q5" value="A" class="hidden roman-radio">
+                            <label for="q5-a" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">A</span>
+                                Curved wooden shield | ~5,000 soldiers per legion
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q5-b" name="q5" value="B" class="hidden roman-radio">
+                            <label for="q5-b" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">B</span>
+                                Iron throwing spear | ~80 soldiers per legion
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q5-c" name="q5" value="C" class="hidden roman-radio">
+                            <label for="q5-c" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">C</span>
+                                Short stabbing sword | ~300 soldiers per legion
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q5-d" name="q5" value="D" class="hidden roman-radio">
+                            <label for="q5-d" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">D</span>
+                                Iron strip armor | ~40,000 soldiers per legion
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q6: Italian Geography MCQ -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Question 6 • 3 Marks</span>
+                        <span class="text-xs text-slate-400">Multiple Choice</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-4">
+                        Italy is a boot-shaped <strong>peninsula</strong> surrounded by the Mediterranean Sea. What river was the city of Rome founded upon?
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <input type="radio" id="q6-a" name="q6" value="A" class="hidden roman-radio">
+                            <label for="q6-a" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">A</span>
+                                The River Nile
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q6-b" name="q6" value="B" class="hidden roman-radio">
+                            <label for="q6-b" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">B</span>
+                                The River Tiber
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q6-c" name="q6" value="C" class="hidden roman-radio">
+                            <label for="q6-c" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">C</span>
+                                The River Thames
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="q6-d" name="q6" value="D" class="hidden roman-radio">
+                            <label for="q6-d" class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-900/50 cursor-pointer text-sm text-slate-300 hover:border-rose-500/50 transition">
+                                <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs mr-3 font-semibold">D</span>
+                                The River Rhine
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q7: Roman Kit Matching -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Question 7 • 3 Marks</span>
+                        <span class="text-xs text-slate-400">Vocabulary Matching</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-4">
+                        Match each Roman soldier term to its correct definition:
+                    </p>
+
+                    <div class="space-y-4">
+                        <!-- Term 1 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-900/60 p-3 rounded-lg border border-slate-700/80">
+                            <div class="md:col-span-4 font-semibold text-rose-300 text-sm">
+                                Gladius
+                            </div>
+                            <div class="md:col-span-8">
+                                <select id="v-match-1" class="w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-rose-500">
+                                    <option value="">-- Select matching definition --</option>
+                                    <option value="gladius">Short sword used for close stabbing combat</option>
+                                    <option value="pilum">Throwing spear designed to bend when hitting shields</option>
+                                    <option value="caligae">Hobnailed leather sandals built for long marching</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Term 2 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-900/60 p-3 rounded-lg border border-slate-700/80">
+                            <div class="md:col-span-4 font-semibold text-rose-300 text-sm">
+                                Pilum
+                            </div>
+                            <div class="md:col-span-8">
+                                <select id="v-match-2" class="w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-rose-500">
+                                    <option value="">-- Select matching definition --</option>
+                                    <option value="gladius">Short sword used for close stabbing combat</option>
+                                    <option value="pilum">Throwing spear designed to bend when hitting shields</option>
+                                    <option value="caligae">Hobnailed leather sandals built for long marching</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Term 3 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-900/60 p-3 rounded-lg border border-slate-700/80">
+                            <div class="md:col-span-4 font-semibold text-rose-300 text-sm">
+                                Caligae
+                            </div>
+                            <div class="md:col-span-8">
+                                <select id="v-match-3" class="w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-rose-500">
+                                    <option value="">-- Select matching definition --</option>
+                                    <option value="gladius">Short sword used for close stabbing combat</option>
+                                    <option value="pilum">Throwing spear designed to bend when hitting shields</option>
+                                    <option value="caligae">Hobnailed leather sandals built for long marching</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q8: Empire Expansion Short Answer -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Question 8 • 6 Marks</span>
+                        <span class="text-xs text-slate-400">Synthesis Explanation</span>
+                    </div>
+                    <p class="text-slate-200 font-medium text-sm md:text-base mb-2">
+                        How did the combination of <strong>paved roads</strong>, <strong>coastal forts</strong>, and <strong>sea routes (Mare Nostrum)</strong> allow the Roman army to conquer lands and control a giant empire?
+                    </p>
+                    <p class="text-xs text-slate-400 mb-4">
+                        <i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i>
+                        <em>Tip: Mention fast movement of legions (~30km/day), moving supplies/grain by ship, or building forts at strategic locations.</em>
+                    </p>
+                    <textarea id="q8-response" rows="4" placeholder="Explain how roads, seas, and forts worked together..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 text-sm focus:outline-none focus:border-rose-500 transition"></textarea>
+                </div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <div class="text-center pt-4 pb-12">
+                <button type="button" onclick="submitTest()" class="px-8 py-4 bg-gradient-to-r from-sky-500 via-indigo-500 to-rose-500 hover:from-sky-400 hover:to-rose-400 text-white font-extrabold rounded-xl text-lg shadow-xl shadow-indigo-500/25 transition transform hover:-translate-y-0.5 active:translate-y-0">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Submit Test for Grading
+                </button>
+            </div>
+
+        </form>
+
+    </main>
+
+    <!-- RESULTS MODAL -->
+    <div id="results-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-card bg-slate-900 border-slate-700 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto">
+            
+            <div class="text-center mb-6">
+                <div id="modal-badge" class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 text-3xl mb-3 border border-amber-500/40">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h3 class="text-2xl font-black text-white" id="modal-title">Test Results</h3>
+                <p class="text-sm text-slate-400 mt-1" id="modal-student-name">Student Name</p>
+            </div>
+
+            <!-- SCORE HIGHLIGHT BOX -->
+            <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-5 mb-6 text-center">
+                <div class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">Final Mark Achieved</div>
+                <div class="text-4xl md:text-5xl font-extrabold text-amber-400 my-1" id="modal-score">0 / 30</div>
+                <div class="text-sm font-semibold text-slate-300" id="modal-percentage">(0%)</div>
+                
+                <div class="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-700 text-left text-xs">
+                    <div class="bg-sky-950/40 border border-sky-500/30 p-3 rounded-lg">
+                        <span class="text-sky-400 font-bold block mb-0.5">Section A (Geography)</span>
+                        <span class="text-slate-200 text-sm font-bold" id="score-sec-a">0 / 15</span>
+                    </div>
+                    <div class="bg-rose-950/40 border border-rose-500/30 p-3 rounded-lg">
+                        <span class="text-rose-400 font-bold block mb-0.5">Section B (History)</span>
+                        <span class="text-slate-200 text-sm font-bold" id="score-sec-b">0 / 15</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DETAILED QUESTION FEEDBACK BREAKDOWN -->
+            <div class="mb-6">
+                <h4 class="text-sm font-bold text-slate-200 uppercase tracking-wider mb-3">Question Breakdown &amp; Feedback</h4>
+                <div id="feedback-list" class="space-y-3 text-xs md:text-sm">
+                    <!-- Dynamic Feedback Items Inserted Here -->
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 justify-end pt-4 border-t border-slate-800">
+                <button type="button" onclick="closeModal()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-lg text-sm transition">
+                    Review Answers
+                </button>
+                <button type="button" onclick="resetTest()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-lg text-sm transition">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Retake Test
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set today's date on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            document.getElementById('test-date').value = today.toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            });
+
+            // Add event listeners to input elements for real-time progress update
+            const inputs = document.querySelectorAll('input[type="radio"], select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('change', updateProgress);
+                input.addEventListener('input', updateProgress);
+            });
+        });
+
+        function updateProgress() {
+            let answered = 0;
+            const total = 8; // 8 question items
+
+            if (document.querySelector('input[name="q1"]:checked')) answered++;
+            if (document.querySelector('input[name="q2"]:checked')) answered++;
+            
+            // Match 1 check
+            if (document.getElementById('match-1').value && 
+                document.getElementById('match-2').value && 
+                document.getElementById('match-3').value && 
+                document.getElementById('match-4').value) answered++;
+
+            if (document.getElementById('q4-response').value.trim().length > 10) answered++;
+
+            if (document.querySelector('input[name="q5"]:checked')) answered++;
+            if (document.querySelector('input[name="q6"]:checked')) answered++;
+
+            // Vocabulary Match check
+            if (document.getElementById('v-match-1').value && 
+                document.getElementById('v-match-2').value && 
+                document.getElementById('v-match-3').value) answered++;
+
+            if (document.getElementById('q8-response').value.trim().length > 10) answered++;
+
+            const percentage = Math.round((answered / total) * 100);
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('progress-text').innerText = `${answered}/${total} Completed`;
+        }
+
+        function submitTest() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            if (!nameInput) {
+                alert('Please enter your full name before submitting the test.');
+                document.getElementById('student-name').focus();
+                return;
+            }
+
+            let scoreA = 0;
+            let scoreB = 0;
+            let feedback = [];
+
+            // --- SECTION A EVALUATION ---
+            // Q1 (2 Marks)
+            const q1Val = document.querySelector('input[name="q1"]:checked')?.value;
+            if (q1Val === 'B') {
+                scoreA += 2;
+                feedback.push({ q: "Q1: Ocean Coverage & Depth", mark: "2/2", ok: true, text: "Correct! 71% coverage and ~3,700m average depth." });
+            } else {
+                feedback.push({ q: "Q1: Ocean Coverage & Depth", mark: "0/2", ok: false, text: "Incorrect. The ocean covers 71% of Earth with an average depth of 3,700m." });
+            }
+
+            // Q2 (3 Marks)
+            const q2Val = document.querySelector('input[name="q2"]:checked')?.value;
+            if (q2Val === 'C') {
+                scoreA += 3;
+                feedback.push({ q: "Q2: Ocean Depth Zones", mark: "3/3", ok: true, text: "Correct! Midnight Zone (>1,000m) is dark, freezing, and high pressure." });
+            } else {
+                feedback.push({ q: "Q2: Ocean Depth Zones", mark: "0/3", ok: false, text: "Incorrect. The Midnight Zone lies below 1,000m depth." });
+            }
+
+            // Q3 Matching (4 Marks)
+            let matchScore = 0;
+            if (document.getElementById('match-1').value === 'shelf') matchScore++;
+            if (document.getElementById('match-2').value === 'reef') matchScore++;
+            if (document.getElementById('match-3').value === 'trench') matchScore++;
+            if (document.getElementById('match-4').value === 'seabed') matchScore++;
+            scoreA += matchScore;
+            feedback.push({ 
+                q: "Q3: Ocean Floor Features", 
+                mark: `${matchScore}/4`, 
+                ok: matchScore === 4, 
+                text: `You matched ${matchScore} out of 4 floor features correctly.` 
+            });
+
+            // Q4 Explanation Rubric (6 Marks)
+            const q4Text = document.getElementById('q4-response').value.toLowerCase();
+            let q4Score = 0;
+            let q4Notes = [];
+
+            if (q4Text.includes('winter') || q4Text.includes('storm') || q4Text.includes('closed') || q4Text.includes('weather')) {
+                q4Score += 2;
+                q4Notes.push('winter storms/weather');
+            }
+            if (q4Text.includes('reef') || q4Text.includes('rock') || q4Text.includes('hidden')) {
+                q4Score += 2;
+                q4Notes.push('hidden rocks/reefs');
+            }
+            if (q4Text.includes('shallow') || q4Text.includes('sandbank') || q4Text.includes('shelf') || q4Text.includes('aground') || q4Text.includes('depth')) {
+                q4Score += 2;
+                q4Notes.push('shallow water/depth hazards');
+            }
+
+            scoreA += q4Score;
+            feedback.push({
+                q: "Q4: Mare Clausum & Hazards",
+                mark: `${q4Score}/6`,
+                ok: q4Score >= 4,
+                text: q4Score > 0 ? `Identified key factors: ${q4Notes.join(', ')}.` : "Ensure you explain winter storms and ocean floor hazards like reefs or shallows."
+            });
+
+            // --- SECTION B EVALUATION ---
+            // Q5 (3 Marks)
+            const q5Val = document.querySelector('input[name="q5"]:checked')?.value;
+            if (q5Val === 'A') {
+                scoreB += 3;
+                feedback.push({ q: "Q5: Scutum & Legion Size", mark: "3/3", ok: true, text: "Correct! Scutum is a curved wooden shield and a legion contained ~5,000 men." });
+            } else {
+                feedback.push({ q: "Q5: Scutum & Legion Size", mark: "0/3", ok: false, text: "Incorrect. Scutum = curved shield; Legion = ~5,000 legionaries." });
+            }
+
+            // Q6 (3 Marks)
+            const q6Val = document.querySelector('input[name="q6"]:checked')?.value;
+            if (q6Val === 'B') {
+                scoreB += 3;
+                feedback.push({ q: "Q6: Geography of Rome", mark: "3/3", ok: true, text: "Correct! Rome was built on seven hills by the River Tiber in Italy." });
+            } else {
+                feedback.push({ q: "Q6: Geography of Rome", mark: "0/3", ok: false, text: "Incorrect. Rome was built on the River Tiber." });
+            }
+
+            // Q7 Matching (3 Marks)
+            let vMatchScore = 0;
+            if (document.getElementById('v-match-1').value === 'gladius') vMatchScore++;
+            if (document.getElementById('v-match-2').value === 'pilum') vMatchScore++;
+            if (document.getElementById('v-match-3').value === 'caligae') vMatchScore++;
+            scoreB += vMatchScore;
+            feedback.push({ 
+                q: "Q7: Roman Soldier Kit Vocabulary", 
+                mark: `${vMatchScore}/3`, 
+                ok: vMatchScore === 3, 
+                text: `You matched ${vMatchScore} out of 3 terms correctly.` 
+            });
+
+            // Q8 Explanation Rubric (6 Marks)
+            const q8Text = document.getElementById('q8-response').value.toLowerCase();
+            let q8Score = 0;
+            let q8Notes = [];
+
+            if (q8Text.includes('road') || q8Text.includes('march') || q8Text.includes('30') || q8Text.includes('fast')) {
+                q8Score += 2;
+                q8Notes.push('road marching efficiency');
+            }
+            if (q8Text.includes('sea') || q8Text.includes('ship') || q8Text.includes('grain') || q8Text.includes('nostrum') || q8Text.includes('trade')) {
+                q8Score += 2;
+                q8Notes.push('sea route supply/transport');
+            }
+            if (q8Text.includes('fort') || q8Text.includes('border') || q8Text.includes('camp') || q8Text.includes('control') || q8Text.includes('defend')) {
+                q8Score += 2;
+                q8Notes.push('fortified borders & control');
+            }
+
+            scoreB += q8Score;
+            feedback.push({
+                q: "Q8: Empire Expansion Geography",
+                mark: `${q8Score}/6`,
+                ok: q8Score >= 4,
+                text: q8Score > 0 ? `Well explained! Mentioned: ${q8Notes.join(', ')}.` : "Explain how roads, sea supply routes, and strategic forts allowed army expansion."
+            });
+
+            // TOTALS
+            const totalScore = scoreA + scoreB;
+            const percentage = Math.round((totalScore / 30) * 100);
+
+            // RENDER MODAL DATA
+            document.getElementById('modal-student-name').innerText = `Student: ${nameInput} | Class: ${document.getElementById('student-class').value}`;
+            document.getElementById('modal-score').innerText = `${totalScore} / 30`;
+            document.getElementById('modal-percentage').innerText = `Overall Grade: ${percentage}%`;
+            document.getElementById('score-sec-a').innerText = `${scoreA} / 15 Marks`;
+            document.getElementById('score-sec-b').innerText = `${scoreB} / 15 Marks`;
+
+            // Dynamic feedback elements
+            const feedbackContainer = document.getElementById('feedback-list');
+            feedbackContainer.innerHTML = '';
+
+            feedback.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `p-3 rounded-lg border ${item.ok ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200' : 'bg-rose-950/30 border-rose-500/30 text-rose-200'}`;
+                div.innerHTML = `
+                    <div class="flex justify-between font-bold mb-1">
+                        <span>${item.q}</span>
+                        <span class="px-2 py-0.5 rounded text-xs ${item.ok ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${item.mark}</span>
+                    </div>
+                    <p class="text-xs text-slate-300">${item.text}</p>
+                `;
+                feedbackContainer.appendChild(div);
+            });
+
+            // Show Modal
+            document.getElementById('results-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('results-modal').classList.add('hidden');
+        }
+
+        function resetTest() {
+            document.getElementById('test-form').reset();
+            closeModal();
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
